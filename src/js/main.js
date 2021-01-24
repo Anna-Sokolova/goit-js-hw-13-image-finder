@@ -1,6 +1,8 @@
 import refs from './refs.js'; //импорт доступов
 import apiService from './apiService.js'; // импорт объекта с логикой для АПИ
 import updatesImageMarcup from './updatesImageMarcup.js'; // импорт функции для отрисовки страницы по шаблону
+import { notificationAlert, notificationError } from './notification.js';
+
 const {
   listRef,
   searchForm,
@@ -18,7 +20,7 @@ searchForm.addEventListener('submit', event => {
 
   if (!apiService.query) {
     //не отправляем на АПИ пустой запрос
-    return alert('Please enter your search query!');
+    return notificationAlert('Please enter your search query!');
   }
 
   listRef.innerHTML = ''; //перерисовываем всю страницу с результатами при каждом новом запросе
@@ -26,35 +28,46 @@ searchForm.addEventListener('submit', event => {
 
   apiService.resetPage(); //сбрасываем page на первую страницу перед каждым новым запросом поиска
 
-  loadMoreBtn.disabled = true;
-  loaMoreBtnLabel.textContent = 'Loading...';
+  disabledBtnLoadMore();
   // loadMoreBtnSpinner.classList.remove('is-hidden');
 
-
-  apiService.fetchImages().then(hits => {
-    updatesImageMarcup(hits);
-    loadMoreBtn.classList.remove('is-hidden');
-    loadMoreBtn.disabled = false;
-    loaMoreBtnLabel.textContent = 'Load more';
-    // loadMoreBtnSpinner.classList.add('is-hidden');
-  });
+  updateFetchImages();
 });
 
 loadMoreBtn.addEventListener('click', () => {
+  disabledBtnLoadMore();
+  updateFetchImages();
+});
+
+function disabledBtnLoadMore() {
   loadMoreBtn.disabled = true;
   loaMoreBtnLabel.textContent = 'Loading...';
+}
+
+function enabledBtnLoadMore() {
+  loadMoreBtn.disabled = false;
+  loaMoreBtnLabel.textContent = 'Load more';
+}
+
+function updateFetchImages() {
   apiService.fetchImages().then(hits => {
+    if (hits.length === 0) {
+      return notificationError('Please, enter the correct request data');
+    }
     updatesImageMarcup(hits);
     loadMoreBtn.classList.remove('is-hidden');
-    loadMoreBtn.disabled = false;
-    loaMoreBtnLabel.textContent = 'Load more';
+    if (hits.length < 12) {
+      loadMoreBtn.classList.add('is-hidden');
+    }
+    enabledBtnLoadMore();
     // loadMoreBtnSpinner.classList.add('is-hidden');
-    // console.dir(document.documentElement);
-    // console.dir(document.documentElement.scrollHeight);
-    // console.dir(document.documentElement.scrollHeight - 3000);
-    window.scrollTo({
-      top: document.documentElement.scrollHeight - 2100, //страница будет проматывать на начало загруженных изображений
-      behavior: 'smooth',
-    });
+      winScroll();
   });
-});
+}
+
+function winScroll() {
+  window.scrollTo({
+    top: document.documentElement.scrollHeight - 1200, //страница будет проматывать на начало загруженных изображений
+    behavior: 'smooth',
+  });
+}
