@@ -28,14 +28,12 @@ searchForm.addEventListener('submit', event => {
 
   apiService.resetPage(); //сбрасываем page на первую страницу перед каждым новым запросом поиска
 
-  disabledBtnLoadMore();
   // loadMoreBtnSpinner.classList.remove('is-hidden');
 
   updateFetchImages();
 });
 
 loadMoreBtn.addEventListener('click', () => {
-  disabledBtnLoadMore();
   updateFetchImages();
 });
 
@@ -50,6 +48,8 @@ function enabledBtnLoadMore() {
 }
 
 function updateFetchImages() {
+  disabledBtnLoadMore();
+  
   apiService.fetchImages().then(hits => {
     if (hits.length === 0) {
       return notificationError('Please, enter the correct request data');
@@ -61,7 +61,7 @@ function updateFetchImages() {
     }
     enabledBtnLoadMore();
     // loadMoreBtnSpinner.classList.add('is-hidden');
-      winScroll();
+    winScroll();
   });
 }
 
