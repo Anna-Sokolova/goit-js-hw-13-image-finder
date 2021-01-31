@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Finder Image</title>
+    <link rel="shortcut icon" href="./images/film.png" type="image/png" />
     <link
-  href="https://fonts.googleapis.com/icon?family=Material+Icons"
-  rel="stylesheet"
-/>
-<!-- <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
@@ -18,12 +19,12 @@
   </head>
 
   <body>
-      <div class="card">
-        <h1><span class="part-title">Finder</span> Image</h1>
+    <div class="card">
+      <h1><span class="part-title">Finder</span> Image</h1>
       <!-- Форма поиска -->
       <form class="search-form" id="search-form">
         <input
-        class="search-input"
+          class="search-input"
           type="text"
           name="query"
           autocomplete="off"
@@ -47,23 +48,22 @@
       </form>
 
       <!-- Список для <li> с карточками изображений -->
-      <ul class="gallery galleryJs">
-      </ul>
+      <ul class="gallery galleryJs"></ul>
 
       <!-- Кнопка 'Load more'  -->
       <button
-      type="button"
-      class="load-btn btn-primary button is-hidden"
-      data-action="load-more"
-    >
-      <!-- <span
+        type="button"
+        class="load-btn btn-primary button is-hidden"
+        data-action="load-more"
+      >
+        <!-- <span
         class="spinner-border spinner-border-sm spinner is-hidden"
         role="status"
         aria-hidden="true"
       ></span> -->
 
-      <span class="label">Load more</span>
-    </button>
+        <span class="label">Load more</span>
+      </button>
     </div>
   </body>
 </html>
